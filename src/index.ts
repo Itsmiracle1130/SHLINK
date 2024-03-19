@@ -52,7 +52,7 @@ const limiter = rateLimit({
 	legacyHeaders: false,
 });
 
-app.use(limiter())
+app.use(limiter)
 // Use the redirect route
 // app.use('/', redirectRoute);
 
