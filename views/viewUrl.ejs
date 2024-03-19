@@ -1,0 +1,39 @@
+<!-- views/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shlink</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo"><a href="/">SHLINK</a></div>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <h1>SHLINK</h1>
+    <p>Shorten your long URLs quickly and easily!</p>
+  </header>
+
+  <section id="shortened-urls">
+    <h2>Your Shortened URLs</h2>
+    <ul>
+        <% shortUrls.forEach(url => { %>
+          <li><a href="<%= url.longUrl %>" target="_blank"><%= url.shortUrl %></a></li>
+        <% }); %>
+      </ul>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 URL Shortener. All rights reserved.</p>
+  </footer>
+</body>
+</html>

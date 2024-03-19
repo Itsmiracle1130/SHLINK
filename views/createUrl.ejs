@@ -1,0 +1,41 @@
+<!-- views/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shlink</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo"><a href="/">SHLINK</a></div>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <h1>SHLINK</h1>
+    <p>Shorten your long URLs quickly and easily!</p>
+  </header>
+
+  <section id="shorten-form">
+    <form action="/createUrl" method="post">
+      <label for="longUrl">Enter your long URL:</label>
+      <input type="text" id="longUrl" name="longUrl" placeholder="https://example.com" required>
+      <label for="nick">Desctiption</label>
+      <input type="text" id="nick" name="nick" placeholder="link to download Images..." required>
+      
+      <button type="submit">Shorten</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 URL Shortener. All rights reserved.</p>
+  </footer>
+</body>
+</html>
