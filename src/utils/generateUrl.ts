@@ -1,4 +1,5 @@
 import { randomInt } from 'crypto';
+import {urlModel} from "../model/url.model"
 
 export function generateRandomId(length: number): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -11,3 +12,13 @@ export function generateRandomId(length: number): string {
   
     return randomId;
   }
+
+  export const generateUniqueShortCode = async () => {
+    while (true) {
+      const shortCode = generateRandomId(5);
+      const existingURL = await urlModel.findOne({ shortCode });
+      if (!existingURL) {
+        return shortCode;
+      }
+    }
+  };

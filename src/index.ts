@@ -1,15 +1,11 @@
 import express, {Express, Request, Response} from "express";
-import * as dotenv from "dotenv";
+import dotenv from "dotenv";
 import cors from "cors";
-import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import router from "./routes/index.routes";
 import connectMongoDb from './db'
-import redirectRoute from "./middleware/redirect"
 import { CustomRequest } from "./utils/Interface";
 import path from 'path'
-import {GET} from './auth/route.auth'
-import auth0Middleware from './auth/auth0'
 dotenv.config();
 const port = process.env.PORT || 3002
 
@@ -33,8 +29,6 @@ app.use(express.urlencoded({ extended: true }));
 // Allow cross-origin requests (for testing purposes)
 app.use(cors());
 
-// app.use(auth0Middleware)
-
 declare global {
   namespace Express {
     interface Request extends CustomRequest { }
@@ -45,14 +39,6 @@ declare global {
 // Routes
 app.use(router);
 
-const limiter = rateLimit({
-	windowMs: 0.5 * 60 * 1000,
-	max: 3, 
-	standardHeaders: true,
-	legacyHeaders: false,
-});
-
-app.use(limiter)
 // Use the redirect route
 // app.use('/', redirectRoute);
 
@@ -60,9 +46,10 @@ app.get("/", (req: Request, res: Response) => {
   res.render('landingPage');
 });
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Error 404")
-})
+// Route for handling 404 errors
+app.use((req, res, next) => {
+  res.status(404).render('404');
+});
 
 app.listen(port, () => console.log(`listening on port ${port}`));
 

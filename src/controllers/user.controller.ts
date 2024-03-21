@@ -1,9 +1,11 @@
 import { Request, Response, Router } from "express";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { hashPassword, comparePassword } from "../utils/bcrypt"
+import {generateToken, validateUserToken} from "../utils/jwt"
+import { validateSignup, validatelogin } from "../validator/user.validator"
 import { userModel } from "../model/user.model"
 import mongoose, { Document } from "mongoose";
 import logger from '../logging/logger'
+
 
 interface userDocument extends Document {
   email: string;
@@ -11,77 +13,92 @@ interface userDocument extends Document {
   urls: mongoose.Schema.Types.ObjectId[];
 }
 
-export async function loginUser(req: Request, res: Response): Promise<void> {
+export async function loginUser(req: Request, res: Response) {
   try {
-    console.log("Login request received");
-    // Check if user exists
-    const user: userDocument | null = await userModel.findOne({
-      email: req.body.email,
-    });
-    if (!user) {
-      res.status(400).render(('login'), ({
-        message: "Invalid email or password"
-      }));
-      // alert('User not found')
-    } else {
-      // Check if password is correct
-      const validPass: boolean = bcrypt.compareSync(
-        req.body.password,
-        user.password
-      );
-      if (!validPass) {
-        res.status(400).render(('login'), ({
-          message: "Invalid email or password"
-        }));
-        // alert('Invalid password')
-      } else {
-        // Generate JWT
-        const token: string = jwt.sign(
-          { id: user._id, email: user.email },
-          process.env.JWT_SECRET as string,
-          {
-            expiresIn: "6h",
-          }
-        );
-        // Save the token to a cookie and send a response
-        res.cookie("token", token, { httpOnly: true });
-        res.status(200).render( "createUrl");
-      }return 
-    }
-  } catch (error: any) {
-    logger.error(`Login error: ${error.message}`)
-  }
+		const { error, value } = validatelogin(req.body);
+		if(error) {
+			return res.status(400).send({
+				status: false,
+				message: error.message
+			});
+		}
+		const { emailUsername, password } = value;
+		const user = await userModel.findOne({
+			$or: [{
+				email: emailUsername
+			}, {
+				username: emailUsername
+			}]
+		});
+		if(!user) {
+			return res.status(409).send({
+				status: false,
+				message: "Invalid User details"
+			});
+		}
+		const passwordCheck = await comparePassword(password, user.password);
+		if(!passwordCheck) {
+			return res.status(409).send({
+				status: false,
+				message: "Invalid user details"
+			});
+		}
+		const token = await generateToken({
+			id: user._id,
+			email: user.email
+		});
+    res.cookie("token", token, { httpOnly: true });
+		const { password: removedPassword, ...userData } = user.toObject();
+		return res.status(200).render(("createUrl"),{
+			status: true,
+			message: "User signin successful",
+			data: { token, userData}
+		});
+	} catch (error) {
+		console.error(error);
+		return res.status(500).send({
+			status: false,
+			message: "Internal server error"
+		});
+	}
 }
 
-export async function registerUser( req: Request, res: Response): Promise<any> {
+export async function registerUser( req: Request, res: Response) {
     
     // Handles user registration
     try {
-      const emailExist = await userModel.findOne({ email: req.body.email });
-      const usernameExist = await userModel.findOne({ username: req.body.username });
-
-      if (emailExist) {
-        return res.status(400).json({ error: "Email has already been used." }).redirect('/signup');
+      const { error, value } = validateSignup(req.body);
+      if(error) {
+        return res.status(400).send({
+          status: false,
+          message: error.message
+        });
       }
-      if (usernameExist) {
-        return res.status(400).json({ error: "Username has already been used." }).redirect('/signup');
-      }
-      if (!req.body.password) {
-        return res.status(400).json({ error: "Password is required" }).redirect('/signup');
+      const { email, username, password } = value;
+      const userExist = await userModel.findOne({ $or: [{ email }, { username }] });
+      if (userExist) {
+        return res.status(409).send({
+          status: false,
+          message: "User with these details already exists"
+        }).redirect('/login');
       }
   
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      const newUser = new userModel({
-        username: req.body.username,
-        email: req.body.email,
-        password: hashedPassword,
+      const hashedPassword = await hashPassword(password);
+      await userModel.create({
+        email,
+        username,
+        password: hashedPassword
       });
-      await newUser.save();
-      return res.status(201).render("login");
-      
-    } catch (error: any) {
-      logger.error(`Signup error: ${error.message}`);
-      return res.status(500).json({ error: "Internal server error" });
+      return res.status(200).render(('login'),{
+        status: true,
+        message: "User account created successfully"
+      })
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({
+        status: false,
+        message: "Internal server error"
+      });
     }
   }
 

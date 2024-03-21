@@ -32,3 +32,4 @@
 [2024-03-18T16:32:21.116Z] [31merror[39m: "longUrl" is not allowed
 [2024-03-19T01:13:14.616Z] [31merror[39m: getaddrinfo EAI_AGAIN ac-ymu8cnh-shard-00-02.i7s1llo.mongodb.net
 [2024-03-19T09:50:28.336Z] [31merror[39m: connection 1 to 3.213.19.128:27017 closed
+[2024-03-19T23:17:02.440Z] [31merror[39m: querySrv ETIMEOUT _mongodb._tcp.cluster0.i7s1llo.mongodb.net

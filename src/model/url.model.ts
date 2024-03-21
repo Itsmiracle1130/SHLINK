@@ -12,24 +12,33 @@ const urlSchema = new Schema(
       required: true,
       unique: true,
     },
-    description: {
-      type: String
-    },
     shortCode : {
       type: String,
       unique: true
-  },
-  userId : {
+    },
+    userId : {
       type: Schema.Types.ObjectId, ref: "User"
-  },
-  clickCount : {
+    },
+    clickCount : {
       type : Number,
       default: 0
-  },
-  QRCode :{
+    },
+    QRCode :{
       type: String
-  }
-  },
+    },
+		clicks: [{
+			timestamp: {
+				type: Date,
+				default: Date.now
+			},
+			ipAddress: {
+				type: String
+			},
+			userAgent: {
+				type: String
+			}
+		}]
+	},
   {
     timestamps: true,
   }
