@@ -17,7 +17,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const JWT_KEY = process.env.JWT_SECRET;
-const generateToken = (payload_1, ...args_1) => __awaiter(void 0, [payload_1, ...args_1], void 0, function* (payload, secret = JWT_KEY) {
+const generateToken = (payload, secret = JWT_KEY) => __awaiter(void 0, void 0, void 0, function* () {
     const token = jsonwebtoken_1.default.sign(payload, secret, { expiresIn: "24h" });
     return token;
 });
