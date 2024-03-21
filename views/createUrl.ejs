@@ -24,11 +24,15 @@
   </header>
 
   <section id="shorten-form">
-    <form action="/createUrl" method="post">
+    <form action="/url/shorten" method="post">
       <label for="longUrl">Enter your long URL:</label>
       <input type="text" id="longUrl" name="longUrl" placeholder="https://example.com" required>
-      <label for="nick">Desctiption</label>
-      <input type="text" id="nick" name="nick" placeholder="link to download Images..." required>
+
+      <!-- <label for="customUrl">Enter your long URL:</label>
+      <input type="text" id="customUrl" name="customUrl" placeholder="https://abc.com" required> -->
+
+      <!-- <label for="nick">Desctiption</label>
+      <input type="text" id="nick" name="nick" placeholder="link to download Images..." required> -->
       
       <button type="submit">Shorten</button>
     </form>
