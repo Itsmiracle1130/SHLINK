@@ -27,7 +27,7 @@ const limiter = (0, express_rate_limit_1.default)({
 router.use("/shorten", limiter);
 router.get("/shorten", verifyToken_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.userModel.findOne({ email: req.user.email }).select("-password");
-    res.render("viewUrl", ({
+    res.render("createUrl", ({
         user
     }));
 }));

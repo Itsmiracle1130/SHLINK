@@ -66,7 +66,7 @@ function loginUser(req, res) {
             });
             res.cookie("token", token, { httpOnly: true });
             const _a = user.toObject(), { password: removedPassword } = _a, userData = __rest(_a, ["password"]);
-            return res.status(200).render(("createUrl"), {
+            return res.status(200).render(("dashboard"), {
                 status: true,
                 message: "User signin successful",
                 data: { token, userData }

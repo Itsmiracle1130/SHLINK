@@ -41,7 +41,7 @@ const shortenUrl = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
         const { longURL } = value;
         const shortCode = yield (0, generateUrl_1.generateUniqueShortCode)();
-        const shortURL = `${HOST}/api/${shortCode}`;
+        const shortURL = `${HOST}/url/${shortCode}`;
         const qrCodeDataURL = yield qrcode_1.default.toDataURL(shortURL);
         const newURL = yield url_model_1.urlModel.create({
             username: user.username,
