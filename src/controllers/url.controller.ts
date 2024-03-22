@@ -28,7 +28,7 @@ export const shortenUrl = async (req: Request, res: Response) =>{
 		}
 		const { longURL } = value;
 		const shortCode = await generateUniqueShortCode();
-		const shortURL = `${HOST}/api/${shortCode}`;
+		const shortURL = `${HOST}/url/${shortCode}`;
 		const qrCodeDataURL = await qrCode.toDataURL(shortURL);
 		const newURL = await urlModel.create({
 			username: user.username,

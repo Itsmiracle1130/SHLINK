@@ -49,7 +49,7 @@ export async function loginUser(req: Request, res: Response) {
 		});
     res.cookie("token", token, { httpOnly: true });
 		const { password: removedPassword, ...userData } = user.toObject();
-		return res.status(200).render(("createUrl"),{
+		return res.status(200).render(("dashboard"),{
 			status: true,
 			message: "User signin successful",
 			data: { token, userData}

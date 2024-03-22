@@ -23,13 +23,20 @@
     <p>Shorten your long URLs quickly and easily!</p>
   </header>
 
+  <section id="shorten-form">
+    <form action="/url/shorten" method="post">
+      <label for="longURL">Enter your long URL:</label>
+      <input type="text" id="longURL" name="longURL" placeholder="https://example.com" required>
+
+      <button type="submit">Shorten</button>
+    </form>
+  </section>
+
   <section id="shortened-urls">
-    <h2>Your Shortened URLs</h2>
-    <ul>
-        <% shortUrls.forEach(url => { %>
-          <li><a href="<%= url.longUrl %>" target="_blank"><%= url.shortUrl %></a></li>
-        <% }); %>
-      </ul>
+    <h2>Here is your result</h2>
+    <p>Long Url = <a href="<%= newURL.longUrl %>" target="_blank"><%= newURL.longUrl %></a></p>
+    <p>Short Url = <a href="<%= newURL.shortUrl %>" target="_blank"><%= newURL.shortUrl %></a></p>
+    <img src="<%= newURL.QRCode %>" alt="qr code" >
   </section>
 
   <footer>

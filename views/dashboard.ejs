@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHLINK Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+          <div class="logo"><a href="/">SHLINK</a></div>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="/users/logout">Logout</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    <div class="container">
+        <h1>Dashboard</h1>
+        <!-- shorten url -->
+        <div class="link-item">
+            <a href="/url/shorten">Create a URL</a>
+        </div>
+        <br><br><br><br><br><br><br>
+        <!-- customize url -->
+        <div class="link-item">
+            <a href="/url/custom">Customize a URL</a>
+        </div>
+        <br><br><br><br><br><br><br>
+        <!-- view all url -->
+        <div class="link-item">
+            <a href="/url/">View All Links</a>
+        </div>
+        <br><br><br><br><br><br><br>
+        <!-- view one url -->
+        <div class="link-item">
+            <a href="/url/:shortCode">View a Link</a>
+        </div>
+        <br><br><br><br><br><br><br>
+        <!-- view analytics -->
+        <div class="link-item">
+            <a href="/analytics/:shortCode">Get Analytics</a>
+        </div>
+    </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <footer>
+        <p>&copy; 2024 SHLINK All rights reserved.</p>
+    </footer>
+</body>
+</html>

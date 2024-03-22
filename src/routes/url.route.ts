@@ -4,6 +4,7 @@ import { shortenUrl, customURL, viewLink, viewLinks, getURLAnalytics} from "../c
 import {verifyToken} from "../middleware/verifyToken"
 import rateLimit from "express-rate-limit";
 import { userModel } from "../model/user.model";
+import { urlModel } from "../model/url.model";
 
 const router = Router()
 
@@ -18,10 +19,12 @@ router.use("/shorten", limiter)
 
 router.get("/shorten", verifyToken, async (req: Request, res: Response) => {
 	const user = await userModel.findOne({ email: req.user.email }).select("-password");
-	res.render("viewUrl", ({
+	res.render("createUrl", ({
 		user
 	}));
 })
+
+
 router.post( "/shorten", verifyToken, shortenUrl)
 router.post("/custom", verifyToken, customURL);
 router.get("/", verifyToken, viewLinks);
