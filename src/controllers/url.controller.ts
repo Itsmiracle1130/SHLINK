@@ -84,10 +84,8 @@ export const customURL = async (req: Request, res: Response) => {
 			shortUrl: shortURL,
 			QRCode: qrCodeDataURL
 		});
-		return res.status(201).send({
-			status: true,
-			message: "Your Customized shortened link is ready",
-			data: newURL
+		return res.status(201).render("customUrl", {
+			newURL
 		});
 	} catch (error) {
 		console.error(error);

@@ -24,6 +24,9 @@ router.get("/shorten", verifyToken, async (req: Request, res: Response) => {
 	}));
 })
 
+router.get("/custom", verifyToken, async (req: Request, res: Response) => {
+	res.render("customUrl");
+})
 
 router.post( "/shorten", verifyToken, shortenUrl)
 router.post("/custom", verifyToken, customURL);

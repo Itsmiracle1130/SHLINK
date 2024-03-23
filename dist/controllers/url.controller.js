@@ -97,10 +97,8 @@ const customURL = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             shortUrl: shortURL,
             QRCode: qrCodeDataURL
         });
-        return res.status(201).send({
-            status: true,
-            message: "Your Customized shortened link is ready",
-            data: newURL
+        return res.status(201).render("customUrl", {
+            newURL
         });
     }
     catch (error) {

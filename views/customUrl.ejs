@@ -20,22 +20,22 @@
       </ul>
     </nav>
     <h1>SHLINK</h1>
-    <p>Shorten your long URLs quickly and easily!</p>
+    <p>Customize your Url shortCode</p>
   </header>
 
-  <section id="shorten-form">
-    <form action="/url/shorten" method="post">
-      <label for="longURL">Enter your long URL:</label>
-      <input type="text" id="longURL" name="longURL" placeholder="https://example.com" required>
+  <section id="custom-form">
+    <form action="/url/custom" method="post">
+      <label for="shortCode">Enter your custom text:</label>
+      <input type="text" id="shortCode" name="shortCode" placeholder="mylink" required>
 
-      <button type="submit">Shorten</button>
+      <button type="submit">Customize</button>
     </form>
   </section>
 
   <section id="shortened-urls">
     <h2>Here is your result</h2>
     <p>Long Url = <a href="<%= newURL.longUrl %>" target="_blank"><%= newURL.longUrl %></a></p>
-    <p>Short Url = <a href="<%= newURL.shortUrl %>" target="_blank"><%= newURL.shortUrl %></a><a href="/url/custom">Customize</a></p>
+    <p>Auto generated Url = <a href="<%= newURL.shortUrl %>" target="_blank"><%= newURL.shortUrl %></a></p>
     <img src="<%= newURL.QRCode %>" alt="qr code" >
   </section>
 

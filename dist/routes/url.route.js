@@ -31,6 +31,9 @@ router.get("/shorten", verifyToken_1.verifyToken, (req, res) => __awaiter(void 0
         user
     }));
 }));
+router.get("/custom", verifyToken_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.render("customUrl");
+}));
 router.post("/shorten", verifyToken_1.verifyToken, url_controller_1.shortenUrl);
 router.post("/custom", verifyToken_1.verifyToken, url_controller_1.customURL);
 router.get("/", verifyToken_1.verifyToken, url_controller_1.viewLinks);
