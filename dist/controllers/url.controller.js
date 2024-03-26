@@ -81,7 +81,7 @@ const customURL = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 message: "Short code already in use, please try another"
             });
         }
-        const shortURL = `${HOST}/api/${shortCode}`;
+        const shortURL = `${HOST}/url/${shortCode}`;
         const qrCodeDataURL = yield qrcode_1.default.toDataURL(shortURL);
         const user = yield user_model_1.userModel.findById(_id);
         if (!user) {
@@ -121,11 +121,10 @@ const viewLinks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         const URLs = yield url_model_1.urlModel.find({ username: user.username });
-        const shortURLs = URLs.map(url => ({ shortUrl: url.shortUrl, longUrl: url.longUrl }));
-        return res.status(200).send({
-            status: true,
-            message: "List of all shortened URLs is generated successfully",
-            data: shortURLs
+        console.log(URLs);
+        const shortURLs = URLs.map(url => ({ shortUrl: url.shortUrl, longUrl: url.longUrl, shortCode: url.shortCode }));
+        return res.status(200).render("viewAllUrls", {
+            shortURLs, user
         });
     }
     catch (error) {
@@ -177,10 +176,8 @@ const getURLAnalytics = (req, res) => __awaiter(void 0, void 0, void 0, function
                 message: "Invalid shortened URL"
             });
         }
-        return res.status(200).send({
-            status: true,
-            message: "URL analytics fetched successfully",
-            data: shortCodeCheck
+        return res.status(200).render("analytics", {
+            shortCodeCheck
         });
     }
     catch (error) {

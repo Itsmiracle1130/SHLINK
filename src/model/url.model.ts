@@ -16,8 +16,8 @@ const urlSchema = new Schema(
       type: String,
       unique: true
     },
-    userId : {
-      type: Schema.Types.ObjectId, ref: "User"
+    username : {
+      type: String
     },
     clickCount : {
       type : Number,

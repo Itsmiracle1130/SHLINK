@@ -68,7 +68,7 @@ export const customURL = async (req: Request, res: Response) => {
 				message: "Short code already in use, please try another"
 			});
 		}
-		const shortURL = `${HOST}/api/${shortCode}`;
+		const shortURL = `${HOST}/url/${shortCode}`;
 		const qrCodeDataURL = await qrCode.toDataURL(shortURL);
 		const user = await userModel.findById(_id);
 		if(!user) {
@@ -106,12 +106,11 @@ export const viewLinks = async (req: Request, res: Response) => {
 				message: "Please Login"
 			});
 		}
-		const URLs = await urlModel.find({ username: user.username });
-		const shortURLs = URLs.map(url => ({ shortUrl: url.shortUrl, longUrl: url.longUrl }));
-		return res.status(200).send({
-			status: true,
-			message: "List of all shortened URLs is generated successfully",
-			data: shortURLs
+		const URLs = await urlModel.find({ username: user.username})
+		console.log(URLs)
+		const shortURLs = URLs.map(url => ({ shortUrl: url.shortUrl, longUrl: url.longUrl, shortCode: url.shortCode }));
+		return res.status(200).render("viewAllUrls",{
+			shortURLs, user
 		});
 	} catch (error) {
 		console.error(error);
@@ -162,10 +161,8 @@ export const getURLAnalytics = async (req: Request, res: Response) => {
 				message: "Invalid shortened URL"
 			});
 		}
-		return res.status(200).send({
-			status: true,
-			message: "URL analytics fetched successfully",
-			data: shortCodeCheck
+		return res.status(200).render("analytics",{
+			shortCodeCheck
 		});
 	} catch (error) {
 		return res.status(500).send({

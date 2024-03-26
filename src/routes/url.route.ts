@@ -28,6 +28,13 @@ router.get("/custom", verifyToken, async (req: Request, res: Response) => {
 	res.render("customUrl");
 })
 
+router.get("/dashboard", verifyToken, async (req: Request, res: Response)=> {
+	const user = await userModel.findOne({ email: req.user.email })
+	res.render("dashboard", {
+		user
+	})
+})
+
 router.post( "/shorten", verifyToken, shortenUrl)
 router.post("/custom", verifyToken, customURL);
 router.get("/", verifyToken, viewLinks);

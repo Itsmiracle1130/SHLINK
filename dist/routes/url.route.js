@@ -34,6 +34,12 @@ router.get("/shorten", verifyToken_1.verifyToken, (req, res) => __awaiter(void 0
 router.get("/custom", verifyToken_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.render("customUrl");
 }));
+router.get("/dashboard", verifyToken_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.userModel.findOne({ email: req.user.email });
+    res.render("dashboard", {
+        user
+    });
+}));
 router.post("/shorten", verifyToken_1.verifyToken, url_controller_1.shortenUrl);
 router.post("/custom", verifyToken_1.verifyToken, url_controller_1.customURL);
 router.get("/", verifyToken_1.verifyToken, url_controller_1.viewLinks);

@@ -1,0 +1,55 @@
+<!-- views/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shlink</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo"><a href="/">SHLINK</a></div>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="/url/logout">Logout</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <h1>SHLINK</h1>
+    <p>Shorten your long URLs quickly and easily!</p>
+  </header>
+
+  <main>
+    <section id="urlbox">
+      <h2>Hi, <%= shortCodeCheck.username %>, here is your url analytics</h2>
+      <hr>
+      <p>
+        Inputed URL = <a href="<%= shortCodeCheck.longUrl %>" target="_blank"><%= shortCodeCheck.longUrl %></a><br>
+        Shortened URL = <a href="<%= shortCodeCheck.shortUrl %>" target="_blank"><%= shortCodeCheck.shortUrl %></a><br>
+        Click Count = <%= shortCodeCheck.clickCount %><br>
+        Clicks:
+      <ul>
+        <% shortCodeCheck.clicks.forEach(function(clicks) { %>
+        <li>
+          <b>Timestamp:</b> <%= clicks.timestamp %><br>
+          <b>IP Address:</b> <%= clicks.ipAddress %><br>
+          <b>User Agent:</b> <%= clicks.userAgent %><br>
+        </li>
+        <hr>
+        <% }); %>
+      </ul>
+      </p>
+      <hero>
+        <a href="/url/dashboard">Go back to dashboard</a>
+      </hero>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 SHLINK All rights reserved</p>
+  </footer>
+</body>
+</html>

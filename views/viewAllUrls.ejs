@@ -1,0 +1,60 @@
+<!-- views/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shlink</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo"><a href="/">SHLINK</a></div>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="/url/logout">Logout</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <h1>SHLINK</h1>
+    <p>Shorten your long URLs quickly and easily!</p>
+  </header>
+
+  <section id="urlbox">
+      <h1>Shortened URLs</h1>
+      <% if (user) { %>
+      <p><b>Welcome, <%= user.username %>!</b></p>
+      <% } else { %>
+      <p>Kindly login to view your shortened URLs.</p>
+      <% } %>
+      <div>
+        <% if (shortURLs.length > 0) { %>
+        <h2>Your Shortened URLs:
+          <hr>
+        </h2>
+        <ul>
+          <% shortURLs.forEach(url => { %>
+          <li>
+            Inputed URL - <%= url.longUrl %></br>
+            Shorten URL - <a href="<%= url.shortUrl %>"><%= url.shortUrl %></a></br>
+            <a href="/url/analytics/<%= url.shortCode %>" target="_blank"> View Analytics</a>
+            <hr>
+          </li>
+          <% }); %>
+        </ul>
+        <% } else { %>
+        <p>No shortened URLs found.</p>
+        <% } %>
+      </div>
+      <hero>
+        <a href="/url/dashboard">Go back to dashboard</a>
+      </hero>
+    </section>
+  <footer>
+    <p>&copy; 2024 SHLINK All rights reserved</p>
+  </footer>
+</body>
+</html>

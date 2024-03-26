@@ -39,8 +39,8 @@ const urlSchema = new mongoose_1.Schema({
         type: String,
         unique: true
     },
-    userId: {
-        type: mongoose_1.Schema.Types.ObjectId, ref: "User"
+    username: {
+        type: String
     },
     clickCount: {
         type: Number,

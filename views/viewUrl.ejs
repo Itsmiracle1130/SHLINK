@@ -35,10 +35,12 @@
   <section id="shortened-urls">
     <h2>Here is your result</h2>
     <p>Long Url = <a href="<%= newURL.longUrl %>" target="_blank"><%= newURL.longUrl %></a></p>
-    <p>Short Url = <a href="<%= newURL.shortUrl %>" target="_blank"><%= newURL.shortUrl %></a><a href="/url/custom">Customize</a></p>
+    <p>Short Url = <a href="<%= newURL.shortUrl %>" target="_blank"><%= newURL.shortUrl %></a></p>
     <img src="<%= newURL.QRCode %>" alt="qr code" >
   </section>
-
+  <hero>
+    <a href="/url/dashboard">Go back to dashboard</a>
+  </hero>
   <footer>
     <p>&copy; 2024 SHLINK All rights reserved</p>
   </footer>
